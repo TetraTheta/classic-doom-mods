@@ -1,0 +1,1 @@
+server int ds_ammo_max = 9999;

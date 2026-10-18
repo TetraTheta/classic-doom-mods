@@ -1,0 +1,2 @@
+alias cleanmap "netevent cleanmap"
+alias cleanmap_force "netevent cleanmap_force"
