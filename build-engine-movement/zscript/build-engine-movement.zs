@@ -38,19 +38,25 @@ class MoveManager : Thinker {
     for (uint i = 0; i < MAXPLAYERS; ++i) {
       if (!playerInGame[i] || !players[i].mo) continue;
       bool bob = (players[i].WeaponState & WF_WEAPONBOBBING);
-      bool doReset = ((!bob) || (players[i].attackdown) || (bob && !(players[i].vel ~ == (0, 0))));
+      bool doReset = ((!bob) || (players[i].attackdown) || (bob && !(players[i].vel ~== (0, 0))));
       let plr = players[i].mo;
       let psp = players[i].GetPSPrite(PSP_WEAPON);
       let weap = players[i].ReadyWeapon;
-      bool CanPinch = ((players[i].WeaponState & WF_WEAPONREADY) || (players[i].WeaponState & WF_WEAPONREADYALT) || (players[i].WeaponState & WF_WEAPONRELOADOK) || (players[i].WeaponState & WF_WEAPONZOOMOK) || (players[i].WeaponState & WF_WEAPONSWITCHOK));
+      bool CanPinch = ((players[i].WeaponState & WF_WEAPONREADY) || (players[i].WeaponState & WF_WEAPONREADYALT) ||
+                       (players[i].WeaponState & WF_WEAPONRELOADOK) || (players[i].WeaponState & WF_WEAPONZOOMOK) ||
+                       (players[i].WeaponState & WF_WEAPONSWITCHOK));
       // COMPATIBILITY DEFINITIONS
       // Ashes 2063
-      string def_ashes_bike = "motohandles", def_ashes_bike2 = "motohandles2", def_ashes_bike3 = "motohandlefake", def_ashes_lucy = "lucyhandles";
-      let ashes_onvehicle = plr.FindInventory(def_ashes_bike) || plr.FindInventory(def_ashes_bike2) || plr.FindInventory(def_ashes_bike3) || plr.FindInventory(def_ashes_lucy);
+      string def_ashes_bike = "motohandles", def_ashes_bike2 = "motohandles2", def_ashes_bike3 = "motohandlefake",
+             def_ashes_lucy = "lucyhandles";
+      let ashes_onvehicle = plr.FindInventory(def_ashes_bike) || plr.FindInventory(def_ashes_bike2) ||
+                            plr.FindInventory(def_ashes_bike3) || plr.FindInventory(def_ashes_lucy);
       // Wool Ball
       string def_woolball_hero = "Hero", def_woolball_skate = "Skateboard";
       let woolball_skate = plr && plr is def_woolball_hero && plr.FindInventory(def_woolball_skate);
-      let woolball_wind = plr && plr is def_woolball_hero && plr.curSector && ((plr.curSector.flags & 32) || (plr.curSector.flags & 84) || (plr.curSector.flags & 118) || (plr.curSector.flags & 4096) || (plr.curSector.flags & 6144) || (plr.curSector.flags & 201));
+      let woolball_wind = plr && plr is def_woolball_hero && plr.curSector &&
+                          ((plr.curSector.flags & 32) || (plr.curSector.flags & 84) || (plr.curSector.flags & 118) ||
+                           (plr.curSector.flags & 4096) || (plr.curSector.flags & 6144) || (plr.curSector.flags & 201));
       let woolball_excepts = woolball_skate || woolball_wind;
       // Misc
       bool player_frozen = plr.Player.Cheats & CF_TOTALLYFROZEN;
@@ -60,7 +66,8 @@ class MoveManager : Thinker {
       let bmove_exceptions = ashes_onvehicle || woolball_excepts || player_onice || player_frozen;
       // Build Movement
       float buildmove_speed = plr.GetCVar("cl_buildmove_speed");
-      if (!plr.GetCVar("cl_buildmove") || bmove_exceptions || (plr.pos.z != plr.floorz && !plr.GetCVar("cl_newairmove"))) {
+      if (!plr.GetCVar("cl_buildmove") || bmove_exceptions ||
+          (plr.pos.z != plr.floorz && !plr.GetCVar("cl_newairmove"))) {
         if (plr.speed != 1.0) {
           plr.A_SetSpeed(1.0);
           plr.vel.xy *= 1.0;
@@ -74,7 +81,8 @@ class MoveManager : Thinker {
       if (plr.GetCVar("cl_always_squat")) plr.JumpZ = plr.Default.JumpZ * 1.00000000001;
       // Air Controller
       float newaircontrol_amount = plr.GetCVar("cl_newairmove_amount");
-      if (!plr.GetCVar("cl_newairmove") || bmove_exceptions || !((plr.Pos.Z != plr.FloorZ) && (plr.vel.x != 0 || plr.vel.y != 0))) {
+      if (!plr.GetCVar("cl_newairmove") || bmove_exceptions ||
+          !((plr.Pos.Z != plr.FloorZ) && (plr.vel.x != 0 || plr.vel.y != 0))) {
         if (level.aircontrol != default_aircontrol) {
           level.aircontrol = default_aircontrol;
           level.airfriction = 1;
@@ -123,50 +131,51 @@ class MoveManager : Thinker {
       }
       // Flinch when falling (& weapon panning)
       float wpn_pan_amount = plr.GetCVar("cl_wpn_panning_amount");
-      if (weap != Null && CanPinch && plr.GetCVar("cl_weapon_panning")) plr.A_WeaponOffset(0, fallTics2 * wpn_pan_amount, WOF_ADD | WOF_INTERPOLATE);
+      if (weap != Null && CanPinch && plr.GetCVar("cl_weapon_panning"))
+        plr.A_WeaponOffset(0, fallTics2 * wpn_pan_amount, WOF_ADD | WOF_INTERPOLATE);
       int flinch_threshold = plr.GetCVar("cl_flinch_threshold");
       int flinch_dur = plr.GetCVar("cl_flinch_duration");
       int flinch_slowdur = flinch_dur - 4;
       float flinch_return = 1.0 / flinch_dur;
       float og_pitch;
-      bool flinch_lowgrav = (plr.GetCVar("cl_noflinch_lowgrav") && plr.curSector.gravity >= 1) || !plr.GetCVar("cl_noflinch_lowgrav");
+      bool flinch_lowgrav =
+        (plr.GetCVar("cl_noflinch_lowgrav") && plr.curSector.gravity >= 1) || !plr.GetCVar("cl_noflinch_lowgrav");
       if (!plr.waterLevel && !plr.bFly && flinch_lowgrav && plr.GetCVar("cl_cam_flinch")) {
         switch (fallState) {
-        case (0): // Falling
-          if (plr.vel.z < 0) {
-            if (fallTics <= (flinch_threshold * 1000) / sv_gravity) {
-              ++fallTics;
+          case (0):  // Falling
+            if (plr.vel.z < 0) {
+              if (fallTics <= (flinch_threshold * 1000) / sv_gravity)
+                ++fallTics;
+              else
+                fallState = 1;
             } else {
-              fallState = 1;
+              fallTics = 0;
             }
-          } else {
-            fallTics = 0;
-          }
-          break;
-        case (1): // Thud
-          if (plr.pos.z <= plr.floorZ || plr.bOnMObj) {
-            if (!ashes_onvehicle) {
-              og_pitch = plr.viewPitch;
-              plr.A_SetViewPitch(plr.viewPitch + (plr.GetCVar("cl_cam_flinch_amount")), SPF_Interpolate);
-            }
-            fallState = 2;
-            fallTics = 0;
-            fallTics2 += flinch_dur;
-          }
-          break;
-        case (2): // Flinch
-          if (fallTics2 > 0) {
-            if (!ashes_onvehicle || plr.viewPitch != og_pitch) {
-              if (fallTics2 > flinch_slowdur && plr.GetCVar("cl_flinch_slowdown") && !ashes_onvehicle) {
-                plr.vel.xy *= 0.77;
+            break;
+          case (1):  // Thud
+            if (plr.pos.z <= plr.floorZ || plr.bOnMObj) {
+              if (!ashes_onvehicle) {
+                og_pitch = plr.viewPitch;
+                plr.A_SetViewPitch(plr.viewPitch + (plr.GetCVar("cl_cam_flinch_amount")), SPF_Interpolate);
               }
-              plr.A_SetViewPitch(plr.viewPitch - (plr.GetCVar("cl_cam_flinch_amount") * flinch_return), SPF_Interpolate); // 0.8 //1.5
+              fallState = 2;
+              fallTics = 0;
+              fallTics2 += flinch_dur;
             }
-            --fallTics2;
-          } else {
-            fallState = 0;
-          }
-          break;
+            break;
+          case (2):  // Flinch
+            if (fallTics2 > 0) {
+              if (!ashes_onvehicle || plr.viewPitch != og_pitch) {
+                if (fallTics2 > flinch_slowdur && plr.GetCVar("cl_flinch_slowdown") && !ashes_onvehicle)
+                  plr.vel.xy *= 0.77;
+                plr.A_SetViewPitch(plr.viewPitch - (plr.GetCVar("cl_cam_flinch_amount") * flinch_return),
+                                   SPF_Interpolate);
+              }
+              --fallTics2;
+            } else {
+              fallState = 0;
+            }
+            break;
         }
       }
     }

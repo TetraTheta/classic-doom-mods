@@ -1,13 +1,8 @@
 class DSCleanMapQueueFlusher : Actor {
-  Default {
-    +NOINTERACTION
-    +NOBLOCKMAP
-    +NOGRAVITY
-    RenderStyle "None";
-  }
+  Default { +NOINTERACTION + NOBLOCKMAP + NOGRAVITY RenderStyle "None"; }
   States {
   Spawn:
-    TNT1 A -1;
+    TNT1 A - 1;
     Stop;
   }
 }
@@ -26,23 +21,15 @@ class DSCleanMapHandler : StaticEventHandler {
   private bool IsBrutalDoomTrace(Actor actor) {
     String className = actor.GetClassName();
     className = className.MakeLower();
-    bool namedRemains =
-      className.IndexOf("xdeath") == 0 ||
-      className.IndexOf("dead") == 0 ||
-      className.IndexOf("brutalizeddead") >= 0 ||
-      className.IndexOf("corpse") >= 0 ||
-      className.IndexOf("gib") >= 0;
+    bool namedRemains = className.IndexOf("xdeath") == 0 || className.IndexOf("dead") == 0 ||
+                        className.IndexOf("brutalizeddead") >= 0 || className.IndexOf("corpse") >= 0 ||
+                        className.IndexOf("gib") >= 0;
     bool goreClass =
-      IsActorClass(actor, 'BigGibBase') ||
-      IsActorClass(actor, 'TinyGib') ||
-      IsActorClass(actor, 'BasicGib') ||
-      IsActorClass(actor, 'XDeath1') ||
-      IsActorClass(actor, 'XDeath1Blue') ||
-      IsActorClass(actor, 'XDeath1Green') ||
-      IsActorClass(actor, 'MeatDeath') ||
-      IsActorClass(actor, 'BlueMeatDeath') ||
-      IsActorClass(actor, 'MuchMeatDeath');
-    bool bloodMark = IsActorClass(actor, 'Brutal_BloodSpot') || IsActorClass(actor, 'Blue_BloodSpot') || IsActorClass(actor, 'Green_BloodSpot');
+      IsActorClass(actor, 'BigGibBase') || IsActorClass(actor, 'TinyGib') || IsActorClass(actor, 'BasicGib') ||
+      IsActorClass(actor, 'XDeath1') || IsActorClass(actor, 'XDeath1Blue') || IsActorClass(actor, 'XDeath1Green') ||
+      IsActorClass(actor, 'MeatDeath') || IsActorClass(actor, 'BlueMeatDeath') || IsActorClass(actor, 'MuchMeatDeath');
+    bool bloodMark = IsActorClass(actor, 'Brutal_BloodSpot') || IsActorClass(actor, 'Blue_BloodSpot') ||
+                     IsActorClass(actor, 'Green_BloodSpot');
     return namedRemains || goreClass || bloodMark;
   }
   private bool IsRemains(Actor actor) {

@@ -1,5 +1,5 @@
 class DSAmmoCapHandler : StaticEventHandler {
-  private void InitializeAmmo(Actor playerPawn) {
+  void InitializeAmmo(Actor playerPawn) {
     int ammoMax = max(0, CVar.FindCVar("ds_ammo_max").GetInt());
     uint classCount = AllActorClasses.Size();
     for (uint index = 0; index < classCount; index++) {

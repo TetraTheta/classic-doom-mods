@@ -36,7 +36,8 @@ class DSFastWeaponsHandler : StaticEventHandler {
       } else if (readyState != null && Actor.InStateSequence(weaponSprite.curState, readyState)) {
         fastFire[playerNumber] = false;
       }
-      if (fastFire[playerNumber] && weaponSprite.curState != lastWeaponState[playerNumber]) weaponSprite.tics = max(1, round(weaponSprite.tics / fireRate));
+      if (fastFire[playerNumber] && weaponSprite.curState != lastWeaponState[playerNumber])
+        weaponSprite.tics = max(1, round(weaponSprite.tics / fireRate));
       lastWeaponState[playerNumber] = weaponSprite.curState;
     }
   }
