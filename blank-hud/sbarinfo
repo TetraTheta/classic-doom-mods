@@ -1,35 +1,9 @@
-statusbar none
-{
-}
-
-statusbar fullscreen
-{
-}
-
-statusbar normal
-{
-}
-
-statusbar automap
-{
-}
-
-statusbar inventory
-{
-}
-
-statusbar inventoryfullscreen
-{
-}
-
-statusbar popuplog
-{
-}
-
-statusbar popupkeys
-{
-}
-
-statusbar popupstatus
-{
-}
+statusbar none {}
+statusbar fullscreen {}
+statusbar normal {}
+statusbar automap {}
+statusbar inventory {}
+statusbar inventoryfullscreen {}
+statusbar popuplog {}
+statusbar popupkeys {}
+statusbar popupstatus {}

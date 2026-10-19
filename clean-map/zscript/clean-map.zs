@@ -66,32 +66,22 @@ class DSCleanMapHandler : StaticEventHandler {
     initialRemains.Clear();
     let autoIterator = ThinkerIterator.Create("Thinker", Thinker.STAT_AUTODECAL);
     Thinker decal;
-    while ((decal = autoIterator.Next()) != null) {
-      initialAutoDecals.Push(decal);
-    }
+    while ((decal = autoIterator.Next()) != null) initialAutoDecals.Push(decal);
     let permanentIterator = ThinkerIterator.Create("Thinker", Thinker.STAT_DECAL);
-    while ((decal = permanentIterator.Next()) != null) {
-      initialPermanentDecals.Push(decal);
-    }
+    while ((decal = permanentIterator.Next()) != null) initialPermanentDecals.Push(decal);
     CaptureInitialActors(false);
     CaptureInitialActors(true);
     hasInitialState = true;
   }
   private void CleanCorpseQueue() {
     let queueSizeCVar = CVar.FindCVar("sv_corpsequeuesize");
-    if (queueSizeCVar == null) {
-      return;
-    }
+    if (queueSizeCVar == null) return;
     int queueSize = queueSizeCVar.GetInt();
-    if (queueSize <= 0) {
-      return;
-    }
+    if (queueSize <= 0) return;
     Array<Actor> flushers;
     for (int index = 0; index < queueSize; index++) {
       let flusher = Actor.Spawn("DSCleanMapQueueFlusher");
-      if (flusher == null) {
-        break;
-      }
+      if (flusher == null) break;
       flushers.Push(flusher);
       flusher.A_QueueCorpse();
     }
@@ -131,21 +121,15 @@ class DSCleanMapHandler : StaticEventHandler {
   }
   override void WorldLoaded(WorldEvent event) {
     brutalDoomLoaded = Object.FindClass('Brutal_BloodSpot', "Actor") != null;
-    if ((event.IsSaveGame || event.IsReopen) && hasInitialState) {
-      return;
-    }
+    if ((event.IsSaveGame || event.IsReopen) && hasInitialState) return;
     CaptureInitialState();
   }
   override void NetworkProcess(ConsoleEvent event) {
     bool force = event.Name == "cleanmap_force";
-    if (event.Name != "cleanmap" && !force) {
-      return;
-    }
+    if (event.Name != "cleanmap" && !force) return;
     CleanActors(false, force);
     CleanActors(true, force);
-    if (force) {
-      CleanCorpseQueue();
-    }
+    if (force) CleanCorpseQueue();
     CleanDecals(force);
   }
 }
