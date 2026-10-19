@@ -1,0 +1,11 @@
+AddOptionMenu "OptionsMenuSimple"
+{
+	ScaleSlider "I-frame duration", "iframesDuration", 0, 35, 1, "Disabled" 
+	StaticText ""
+}
+
+AddOptionMenu "OptionsMenu"
+{
+	ScaleSlider "I-frame duration", "iframesDuration", 0, 35, 1, "Disabled" 
+	StaticText ""
+}
