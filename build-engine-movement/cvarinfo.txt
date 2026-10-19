@@ -1,0 +1,24 @@
+//main
+user bool cl_buildmove = true;
+user bool cl_newairmove = true;
+
+//advanced
+user float cl_buildmove_speed = 1.9;
+user float cl_newairmove_amount = 0.64;
+user bool cl_noflinch_lowgrav = true;
+
+//cam_flinch
+user bool cl_cam_flinch = true;
+user int cl_flinch_threshold = 8;
+user int cl_cam_flinch_amount = 10;
+user int cl_flinch_duration = 10;
+user bool cl_weapon_panning = true;
+user float cl_wpn_panning_amount = 2.0;
+user bool cl_flinch_slowdown = true;
+
+//death anims
+user bool cl_roll_death = true;
+user bool cl_death_flash = true;
+
+//misc
+user bool cl_always_squat = true;

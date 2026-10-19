@@ -1,0 +1,9 @@
+GameInfo
+{
+	AddEventHandlers = "BuildMoveHandler"
+}
+
+/*gamedefaults
+{
+    AirControl = 0.00390625
+}

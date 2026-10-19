@@ -1,0 +1,39 @@
+AddOptionMenu "OptionsMenu" 
+{
+	StaticText " "
+	Submenu "Build Movement Options", "BuildMoveMenu"
+}
+
+OptionMenu "BuildMoveMenu"
+{
+	Title "Build Movement"
+	StaticText ""
+	StaticText ""
+
+	Option "Enable Build Movement", cl_buildmove, "YesNo"
+	Option "Greater Air Control", cl_newairmove, "OnOff"
+	SubMenu "Advanced Options", "AdvBuildMoveMenu"
+	StaticText ""
+	Option "Camera Flinching", cl_cam_flinch, "OnOff"
+	Slider "Camera Flinching Threshold", cl_flinch_threshold, 4, 12, 2, 1, cl_cam_flinch
+	Slider "Camera Flinching Amount", cl_cam_flinch_amount, 0, 20, 0.5, 1, cl_cam_flinch
+	Slider "Camera Flinching Duration", cl_flinch_duration, 5, 15, 1, 0, cl_cam_flinch
+	Option "Flinching Slows You Down", cl_flinch_slowdown, "YesNo", cl_cam_flinch
+	Option "Weapon Sprite Panning", cl_weapon_panning, "OnOff", cl_cam_flinch
+	Slider "Weapon Panning Amount", cl_wpn_panning_amount, 1.0, 3.0, 0.5, 1, cl_cam_flinch
+	Option "Random Viewroll On Death", cl_roll_death, "OnOff"
+	Option "Screen Stays Red On Death", cl_death_flash, "OnOff"
+}
+
+OptionMenu "AdvBuildMoveMenu"
+{
+	Title "Advanced BuildMove Options"
+	StaticText ""
+	StaticText ""
+	StaticText "Changing these is not recommended!", "Gold"
+	StaticText ""
+
+	Slider "Build Movement Speed", cl_buildmove_speed, 1.0, 3.0, 0.2, 2
+	Slider "Greater Air Control Amount", cl_newairmove_amount, 0.00390625, 1.0, 0.8, 2
+	Option "Flinching On Low Gravity Areas", cl_noflinch_lowgrav, "NoYes"
+}
