@@ -16,6 +16,7 @@ class DSCleanMapHandler : StaticEventHandler {
   private Array<Thinker> initialAutoDecals;
   private Array<Thinker> initialPermanentDecals;
   private Array<Actor> initialRemains;
+  private bool brutalDoomLoaded;
   private bool hasInitialState;
 
   private bool IsActorClass(Actor actor, Name className) {
@@ -46,7 +47,7 @@ class DSCleanMapHandler : StaticEventHandler {
   }
   private bool IsRemains(Actor actor) {
     bool hostileCorpse = actor.bIsMonster && !actor.bFriendly && actor.bKilled;
-    return actor.bCorpse || hostileCorpse || IsBrutalDoomTrace(actor);
+    return actor.bCorpse || hostileCorpse || (brutalDoomLoaded && IsBrutalDoomTrace(actor));
   }
   private void CaptureInitialActors(bool clientSide) {
     let iterator = ThinkerIterator.Create("Actor", Thinker.MAX_STATNUM + 1, clientSide);
@@ -129,6 +130,7 @@ class DSCleanMapHandler : StaticEventHandler {
     }
   }
   override void WorldLoaded(WorldEvent event) {
+    brutalDoomLoaded = Object.FindClass('Brutal_BloodSpot', "Actor") != null;
     if ((event.IsSaveGame || event.IsReopen) && hasInitialState) {
       return;
     }
