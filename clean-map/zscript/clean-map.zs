@@ -11,6 +11,7 @@ class DSCleanMapHandler : StaticEventHandler {
   private Array<Thinker> initialAutoDecals;
   private Array<Thinker> initialPermanentDecals;
   private Array<Actor> initialRemains;
+  private bool beautifulDoomLoaded;
   private bool brutalDoomLoaded;
   private bool hasInitialState;
 
@@ -32,9 +33,16 @@ class DSCleanMapHandler : StaticEventHandler {
                      IsActorClass(actor, 'Green_BloodSpot');
     return namedRemains || goreClass || bloodMark;
   }
+  private bool IsBeautifulDoomTrace(Actor actor) {
+    return IsActorClass(actor, 'BD_BaseGib') || IsActorClass(actor, 'BD_BloodBase') ||
+           IsActorClass(actor, 'BD_CorpseFlySpawner') || IsActorClass(actor, 'BD_CorpseFly') ||
+           IsActorClass(actor, 'BD_GibSmudge') || IsActorClass(actor, 'BD_BloodDropSplash') ||
+           IsActorClass(actor, 'BD_BFountainSpray') || IsActorClass(actor, 'BD_PlaneDecal');
+  }
   private bool IsRemains(Actor actor) {
     bool hostileCorpse = actor.bIsMonster && !actor.bFriendly && actor.bKilled;
-    return actor.bCorpse || hostileCorpse || (brutalDoomLoaded && IsBrutalDoomTrace(actor));
+    return actor.bCorpse || hostileCorpse || (beautifulDoomLoaded && IsBeautifulDoomTrace(actor)) ||
+           (brutalDoomLoaded && IsBrutalDoomTrace(actor));
   }
   private void CaptureInitialActors(bool clientSide) {
     let iterator = ThinkerIterator.Create("Actor", Thinker.MAX_STATNUM + 1, clientSide);
@@ -107,6 +115,7 @@ class DSCleanMapHandler : StaticEventHandler {
     }
   }
   override void WorldLoaded(WorldEvent event) {
+    beautifulDoomLoaded = Object.FindClass('BD_BloodBase', "Actor") != null;
     brutalDoomLoaded = Object.FindClass('Brutal_BloodSpot', "Actor") != null;
     if ((event.IsSaveGame || event.IsReopen) && hasInitialState) return;
     CaptureInitialState();
