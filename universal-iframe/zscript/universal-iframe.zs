@@ -12,7 +12,6 @@ CLASS iframes : powerup {
   DEFAULT {
     Inventory.MaxAMount 1;
     +Inventory.ALWAYSPICKUP;
-    Powerup.Color "None", 0.0;
   }
 
   override void InitEffect() {

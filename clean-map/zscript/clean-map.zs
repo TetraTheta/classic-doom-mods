@@ -72,7 +72,7 @@ class DSCleanMapHandler : StaticEventHandler {
     let queueSizeCVar = CVar.FindCVar("sv_corpsequeuesize");
     if (queueSizeCVar == null) return;
     int queueSize = queueSizeCVar.GetInt();
-    if (queueSize <= 0) return;
+    if (!queueSize) return;
     Array<Actor> flushers;
     for (int index = 0; index < queueSize; index++) {
       let flusher = Actor.Spawn("DSCleanMapQueueFlusher");
