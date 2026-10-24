@@ -1,0 +1,6 @@
+version "5.0.0"
+
+#include "zscript/vanilla.zs"
+#include "zscript/beautiful-doom.zs"
+#include "zscript/brutal-doom.zs"
+#include "zscript/better-health-system.zs"

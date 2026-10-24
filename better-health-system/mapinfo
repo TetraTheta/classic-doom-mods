@@ -1,0 +1,4 @@
+GameInfo {
+  BasicArmorClass = "BHSArmor"
+  AddEventHandlers = "BHSHandler"
+}
