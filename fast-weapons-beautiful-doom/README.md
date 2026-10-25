@@ -1,7 +1,15 @@
 # Fast Weapons: Beautiful Doom
 
-Load this PK3 after Beautiful Doom **instead of** `fast_weapons.pk3`. It is a standalone replacement for Fast Weapons, not an add-on to it. Keep `sv_fastweapons` at `0`.
+Use this dedicated mod when playing with Beautiful Doom. Load `fast_weapons_beautiful_doom.pk3` after Beautiful Doom **instead of** `fast_weapons.pk3`; do not load both Fast Weapons variants. Keep `sv_fastweapons` at `0`.
 
-The `DS_*_RATE` constants in `zscript/fast-weapons-beautiful-doom.zs` have the same names and initial values as Fast Weapons. They are compile-time constants, not CVars. Change a value and rebuild the PK3 to tune it.
+There are no CVars or in-game settings. The rates below are constants in `zscript/fast-weapons-beautiful-doom.zs`; changing them requires rebuilding the PK3.
 
-The five supported Beautiful Doom weapons use the same rate-based advancement of their primary firing states. State actions such as shooting, casing ejection, ammo checks, and refire still run. Fractional rates accumulate across ticks. Reloading, selecting, deselecting, and alternate fire retain their normal timing. Vanilla Doom weapons retain Fast Weapons' original state-duration scaling. This implementation targets Beautiful Doom 2023.09.01; check behavior again after changing Beautiful Doom versions.
+| Weapon | Default rate |
+| --- | ---: |
+| Pistol | `2.0` |
+| Shotgun | `2.0` |
+| Super shotgun | `2.0` |
+| Rocket launcher | `2.0` |
+| Chaingun | `4.0` |
+
+The five supported Beautiful Doom weapons have faster primary fire. Reloading, selecting, deselecting, and alternate fire retain their normal timing. Vanilla Doom weapons also receive the firing speed change. This implementation targets Beautiful Doom 2023.09.01; check behavior again after changing Beautiful Doom versions.
